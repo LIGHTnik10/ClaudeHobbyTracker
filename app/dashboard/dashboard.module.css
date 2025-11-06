@@ -1,0 +1,392 @@
+.container {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 24px;
+  color: white;
+}
+
+.header {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: #667eea;
+  margin-bottom: 4px;
+}
+
+.header p {
+  color: #666;
+  font-size: 14px;
+}
+
+.logoutBtn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.logoutBtn:hover {
+  background: #d32f2f;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.topBar h2 {
+  color: white;
+  font-size: 24px;
+}
+
+.addBtn {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.addBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.empty {
+  background: white;
+  border-radius: 12px;
+  padding: 60px 40px;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+}
+
+.hobbiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.hobbyCard {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.hobbyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hobbyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.hobbyHeader h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.category {
+  display: inline-block;
+  background: #e8eaf6;
+  color: #667eea;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 32px;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+}
+
+.deleteBtn:hover {
+  background: #ffebee;
+  color: #f44336;
+}
+
+.description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.hobbyActions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.actionBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.actionBtn:hover {
+  transform: translateY(-1px);
+}
+
+.sessionsContainer {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.sessionsContainer h4 {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.sessionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sessionItem {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.sessionInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.sessionDate {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.sessionDuration {
+  font-size: 14px;
+  color: #667eea;
+  font-weight: 700;
+}
+
+.sessionNotes {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.noSessions {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  padding: 20px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalContent h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.inputGroup textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.modalButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancelBtn {
+  flex: 1;
+  background: #e0e0e0;
+  color: #666;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #d0d0d0;
+}
+
+.submitBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .topBar {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .hobbiesGrid {
+    grid-template-columns: 1fr;
+  }
+}
