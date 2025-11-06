@@ -52,7 +52,6 @@ export default function Home() {
 
   const deleteHobby = (id: string) => {
     setHobbies(hobbies.filter(h => h.id !== id));
-    // Update localStorage
     const updated = hobbies.filter(h => h.id !== id);
     if (updated.length === 0) {
       localStorage.removeItem('hobbies');
@@ -94,161 +93,217 @@ export default function Home() {
     return `${mins}m`;
   };
 
+  const categoryColors = [
+    'from-purple-500 to-pink-500',
+    'from-blue-500 to-cyan-500',
+    'from-green-500 to-emerald-500',
+    'from-orange-500 to-red-500',
+    'from-indigo-500 to-purple-500',
+    'from-teal-500 to-green-500',
+  ];
+
+  const getGradientForHobby = (id: string) => {
+    const index = parseInt(id) % categoryColors.length;
+    return categoryColors[index];
+  };
+
   return (
-    <main className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">Hobby Tracker</h1>
-            <p className="text-lg text-gray-600 mt-2">
-              Track your hobbies and time spent on each activity
+            <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 mb-2">
+              Hobby Tracker
+            </h1>
+            <p className="text-lg text-purple-200/80">
+              Track your passions, measure your progress
             </p>
           </div>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-semibold shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/60 transition-all duration-300 hover:scale-105"
           >
-            {showAddForm ? 'Cancel' : '+ Add Hobby'}
+            <span className="flex items-center gap-2">
+              {showAddForm ? (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Cancel
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add Hobby
+                </>
+              )}
+            </span>
           </button>
         </div>
 
+        {/* Add Form */}
         {showAddForm && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Add New Hobby</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Hobby Name *
-                </label>
-                <input
-                  type="text"
-                  value={newHobby.name}
-                  onChange={(e) => setNewHobby({ ...newHobby, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., Guitar, Painting, Running"
-                />
+          <div className="mb-8 animate-in slide-in-from-top duration-300">
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl">
+              <h2 className="text-3xl font-bold text-white mb-6">Create New Hobby</h2>
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    Hobby Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={newHobby.name}
+                    onChange={(e) => setNewHobby({ ...newHobby, name: e.target.value })}
+                    className="w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300/50 focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all"
+                    placeholder="e.g., Guitar, Painting, Running"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    Category
+                  </label>
+                  <input
+                    type="text"
+                    value={newHobby.category}
+                    onChange={(e) => setNewHobby({ ...newHobby, category: e.target.value })}
+                    className="w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300/50 focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all"
+                    placeholder="e.g., Music, Arts, Sports"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value={newHobby.description}
+                    onChange={(e) => setNewHobby({ ...newHobby, description: e.target.value })}
+                    className="w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300/50 focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all resize-none"
+                    rows={3}
+                    placeholder="What do you enjoy about this hobby?"
+                  />
+                </div>
+                <button
+                  onClick={addHobby}
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-4 rounded-xl font-semibold shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-[1.02]"
+                >
+                  Create Hobby
+                </button>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Category
-                </label>
-                <input
-                  type="text"
-                  value={newHobby.category}
-                  onChange={(e) => setNewHobby({ ...newHobby, category: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., Music, Arts, Sports"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
-                </label>
-                <textarea
-                  value={newHobby.description}
-                  onChange={(e) => setNewHobby({ ...newHobby, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={3}
-                  placeholder="What do you enjoy about this hobby?"
-                />
-              </div>
-              <button
-                onClick={addHobby}
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-              >
-                Add Hobby
-              </button>
             </div>
           </div>
         )}
 
+        {/* Hobbies Grid */}
         {hobbies.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
-            <div className="text-gray-400 mb-4">
-              <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
+          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-16 text-center shadow-2xl">
+            <div className="mb-6">
+              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center">
+                <svg className="w-16 h-16 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">No hobbies yet</h3>
-            <p className="text-gray-500">Click "Add Hobby" to start tracking your activities!</p>
+            <h3 className="text-2xl font-bold text-white mb-3">Your Journey Awaits</h3>
+            <p className="text-purple-200/70 text-lg">Start tracking your first hobby and watch your progress grow!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {hobbies.map((hobby) => (
-              <div key={hobby.id} className="bg-white rounded-lg shadow-md p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900">{hobby.name}</h3>
-                    {hobby.category && (
-                      <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mt-2">
-                        {hobby.category}
-                      </span>
-                    )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {hobbies.map((hobby, index) => (
+              <div
+                key={hobby.id}
+                className="group bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] animate-in fade-in slide-in-from-bottom duration-500"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Header with gradient */}
+                <div className={`bg-gradient-to-r ${getGradientForHobby(hobby.id)} p-4 rounded-2xl mb-4 shadow-lg`}>
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-white mb-1">{hobby.name}</h3>
+                      {hobby.category && (
+                        <span className="inline-block bg-white/30 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
+                          {hobby.category}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => deleteHobby(hobby.id)}
+                      className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-all hover:scale-110"
+                    >
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
                   </div>
-                  <button
-                    onClick={() => deleteHobby(hobby.id)}
-                    className="text-red-600 hover:text-red-800 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
                 </div>
 
                 {hobby.description && (
-                  <p className="text-gray-600 mb-4">{hobby.description}</p>
+                  <p className="text-purple-100/80 mb-4 text-sm leading-relaxed">{hobby.description}</p>
                 )}
 
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <div className="text-sm text-gray-600">Total Time Spent</div>
-                  <div className="text-3xl font-bold text-blue-600">
+                {/* Stats Card */}
+                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 mb-4 border border-white/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-purple-200/70 text-sm font-medium">Total Time</span>
+                    <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300 mb-1">
                     {formatTime(hobby.timeSpent)}
                   </div>
-                  <div className="text-sm text-gray-600 mt-1">
+                  <div className="flex items-center gap-2 text-purple-200/60 text-sm">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                     {hobby.sessions.length} session{hobby.sessions.length !== 1 ? 's' : ''}
                   </div>
                 </div>
 
+                {/* Session Form or Button */}
                 {showSessionForm === hobby.id ? (
-                  <div className="space-y-3">
+                  <div className="space-y-3 animate-in slide-in-from-top duration-300">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-semibold text-purple-200 mb-2">
                         Duration (minutes) *
                       </label>
                       <input
                         type="number"
                         value={newSession.duration}
                         onChange={(e) => setNewSession({ ...newSession, duration: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300/50 focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm"
                         placeholder="30"
                         min="1"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-semibold text-purple-200 mb-2">
                         Notes (optional)
                       </label>
                       <input
                         type="text"
                         value={newSession.notes}
                         onChange={(e) => setNewSession({ ...newSession, notes: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300/50 focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm"
                         placeholder="What did you work on?"
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => addSession(hobby.id)}
-                        className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                        className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 transition-all hover:scale-[1.02]"
                       >
-                        Save Session
+                        Save
                       </button>
                       <button
                         onClick={() => {
                           setShowSessionForm(null);
                           setNewSession({ duration: '', notes: '' });
                         }}
-                        className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                        className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20"
                       >
                         Cancel
                       </button>
@@ -257,26 +312,35 @@ export default function Home() {
                 ) : (
                   <button
                     onClick={() => setShowSessionForm(hobby.id)}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
                   >
-                    + Log Time
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Log Time
                   </button>
                 )}
 
+                {/* Recent Sessions */}
                 {hobby.sessions.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Recent Sessions</h4>
-                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <h4 className="text-sm font-bold text-purple-200 mb-3 flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      </svg>
+                      Recent Sessions
+                    </h4>
+                    <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
                       {hobby.sessions.slice(-5).reverse().map((session) => (
-                        <div key={session.id} className="text-sm bg-gray-50 p-2 rounded">
-                          <div className="flex justify-between">
-                            <span className="font-medium">{formatTime(session.duration)}</span>
-                            <span className="text-gray-500">
+                        <div key={session.id} className="bg-white/5 backdrop-blur-sm p-3 rounded-xl border border-white/10 hover:bg-white/10 transition-all">
+                          <div className="flex justify-between items-center">
+                            <span className="font-bold text-purple-100">{formatTime(session.duration)}</span>
+                            <span className="text-purple-200/60 text-xs">
                               {new Date(session.date).toLocaleDateString()}
                             </span>
                           </div>
                           {session.notes && (
-                            <div className="text-gray-600 text-xs mt-1">{session.notes}</div>
+                            <div className="text-purple-200/70 text-xs mt-2 italic">{session.notes}</div>
                           )}
                         </div>
                       ))}
@@ -288,6 +352,65 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slide-in-from-bottom {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes slide-in-from-top {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-in {
+          animation-fill-mode: both;
+        }
+        .fade-in {
+          animation-name: fade-in;
+        }
+        .slide-in-from-bottom {
+          animation-name: slide-in-from-bottom;
+        }
+        .slide-in-from-top {
+          animation-name: slide-in-from-top;
+        }
+        .duration-300 {
+          animation-duration: 300ms;
+        }
+        .duration-500 {
+          animation-duration: 500ms;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(168, 85, 247, 0.4);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(168, 85, 247, 0.6);
+        }
+      `}</style>
     </main>
   );
 }
