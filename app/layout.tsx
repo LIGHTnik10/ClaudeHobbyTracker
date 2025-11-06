@@ -3,7 +3,10 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Hobby Tracker',
-  description: 'Track your hobbies and progress',
+  description: 'Track your hobbies and progress with beautiful visualizations',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
